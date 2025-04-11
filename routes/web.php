@@ -11,11 +11,15 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PelatihanOnlineController;
 use App\Http\Controllers\PelatihanOfflineController;
-use App\Http\Controllers\Admin\PembayaranAdminController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\DokumentasiPelatihanController;
 use App\Http\Controllers\PersetujuanController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\PendapatAnggotaController;
+use App\Http\Controllers\SertifikatController;
+use App\Http\Controllers\KejuruanController;
+use App\Http\Controllers\HistoryPelatihanController;
+use App\Http\Controllers\GuruPelatihanController;
 use Laravel\Socialite\Facades\Socialite;
 
 /*
@@ -28,208 +32,157 @@ use Laravel\Socialite\Facades\Socialite;
 |--------------------------------------------------------------------------
 */
 
-// **Halaman Utama**
+// **Public Routes**
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
-// **Autentikasi (Login & Register)**
-Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-Route::post('/login', [AuthenticatedSessionController::class, 'store']);
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-    ->middleware('auth')
-    ->name('logout');
+// Authentication Routes
+Route::controller(AuthenticatedSessionController::class)->group(function() {
+    Route::get('/login', 'create')->name('login');
+    Route::post('/login', 'store');
+    Route::post('/logout', 'destroy')->middleware('auth')->name('logout');
+});
 
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('register', [RegisterController::class, 'register'])->name('register.post');
+Route::controller(RegisterController::class)->group(function() {
+    Route::get('/register', 'showRegistrationForm')->name('register');
+    Route::post('/register', 'register')->name('register.post');
+    Route::get('register/verify-otp/{email}', 'verifyOtpForm')->name('verifyOtp');
+    Route::post('register/verify-otp', 'verifyOtp')->name('verifyOtpPost');
+});
 
-Route::post('/register', [RegisterController::class, 'register']);
-Route::get('register/verify-otp/{email}', [RegisterController::class, 'verifyOtpForm'])->name('verifyOtp');
-Route::post('register/verify-otp', [RegisterController::class, 'verifyOtp'])->name('verifyOtpPost');
-
-
-// **Verifikasi Email**
+// Email Verification
 Route::get('/email/verify/{id}/{hash}', function (\Illuminate\Foundation\Auth\EmailVerificationRequest $request) {
     $request->fulfill();
     return redirect('/user/dashboard');
 })->middleware('auth')->name('verification.verify');
 
-// **Dashboard**
-Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard'); // Ganti 'dashboard' dengan nama view Anda
-    })->name('dashboard');
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-
-   
-
-
-    // **Profile**
-    Route::resource('profile', ProfileController::class);
-
-    // **Pelatihan**
-    Route::resource('/pelatihan_populer', PelatihanController::class);
-    Route::resource('/pelatihan_online', PelatihanOnlineController::class);
-    Route::resource('/pelatihan_offline', PelatihanOfflineController::class);
-
-    // **Pembayaran**
-    Route::resource('pembayaran', PembayaranController::class)->middleware('auth');
-});
-
-// **Rute untuk Pengguna yang Sudah Disetujui**
-Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::get('/profile/create', [ProfileController::class, 'create'])->name('profile.create');
-});
-
-// **Pelatihan**
-Route::resource('/pelatihan', PelatihanController::class);
-
-// **Detail Pelatihan**
-Route::get('/pelatihan/{id}', [PelatihanController::class, 'show'])->name('pelatihan.show');
-
-// **Pendaftaran Pelatihan**
-Route::get('/pelatihan/{id}/daftar', [PelatihanController::class, 'daftar'])->name('pelatihan.daftar');
-
-// **Pembayaran**
-Route::get('/pembayaran/create/{pelatihanID}', [PembayaranController::class, 'create'])->name('pembayaran.create');
-Route::post('/pembayaran', [PembayaranController::class, 'store'])->name('pembayaran.store');
-
-// **Dokumentasi Pelatihan**
-Route::resource('/dokumentasi', DokumentasiPelatihanController::class);
-
-
-// **Profil Pengguna**
-Route::middleware(['auth'])->group(function () {
-    Route::get('/profil', [ProfilController::class, 'index'])->name('profil.index');
-    Route::post('/profil/update', [ProfilController::class, 'update'])->name('profil.update');
-});
-
-// **Login Sosial Media**
+// Socialite Routes
 Route::get('/login/google', function () {
     return Socialite::driver('google')->redirect();
 })->name('login.google');
 
 Route::get('/login/google/callback', function () {
     $user = Socialite::driver('google')->user();
-    // Logika autentikasi pengguna
+    // Authentication logic
 });
 
-Route::get('/login/microsoft', [LoginController::class, 'redirectToMicrosoft'])->name('login.microsoft');
-Route::get('/login/microsoft/callback', [LoginController::class, 'handleMicrosoftCallback']);
+Route::controller(LoginController::class)->group(function() {
+    Route::get('/login/microsoft', 'redirectToMicrosoft')->name('login.microsoft');
+    Route::get('/login/microsoft/callback', 'handleMicrosoftCallback');
+    Route::get('/login/apple', 'redirectToApple')->name('login.apple');
+    Route::get('/login/apple/callback', 'handleAppleCallback');
+});
 
-Route::get('/login/apple', [LoginController::class, 'redirectToApple'])->name('login.apple');
-Route::get('/login/apple/callback', [LoginController::class, 'handleAppleCallback']);
+// Pelatihan Routes (Public)
+Route::controller(PelatihanController::class)->group(function() {
+    Route::get('/pelatihan', 'index')->name('pelatihan.index');
+    Route::get('/pelatihan/{id}', 'show')->name('pelatihan.show');
+});
 
+// **Authenticated Routes**
+Route::middleware(['auth'])->group(function () {
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
-Route::get('/pelatihan/{id}', [PelatihanController::class, 'show'])->name('pelatihan.show');
-Route::post('/pelatihan/{id}/daftar', [PelatihanController::class, 'daftar'])->name('pelatihan.daftar');
+    // Profile Routes
+    Route::controller(ProfileController::class)->group(function() {
+        Route::get('/profile', 'index')->name('profile.index');
+        Route::get('/profile/create', 'create')->name('profile.create');
+        Route::resource('profile', ProfileController::class)->except(['index', 'create']);
+    });
 
-Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
-Route::post('/pembayaran/{id}/update', [PembayaranController::class, 'update'])->name('pembayaran.update');
+    Route::controller(ProfilController::class)->group(function() {
+        Route::get('/profil', 'index')->name('profil.index');
+        Route::post('/profil/update', 'update')->name('profil.update');
+    });
 
+    // Pelatihan Registration
+    Route::post('/pelatihan/{id}/daftar', [PelatihanController::class, 'daftar'])->name('pelatihan.daftar');
 
+    // Pembayaran Routes
+    Route::controller(PembayaranController::class)->group(function() {
+        Route::get('/pembayaran/create/{pelatihanID}', 'create')->name('pembayaran.create');
+        Route::post('/pembayaran', 'store')->name('pembayaran.store');
+        Route::get('/pembayaran/{id}', 'show')->name('pembayaran.show');
+    });
 
-// Route untuk admin
+    // Dokumentasi Pelatihan
+    Route::resource('/dokumentasi', DokumentasiPelatihanController::class);
+
+    // Sertifikat Routes
+    Route::controller(SertifikatController::class)->group(function() {
+        Route::get('/sertifikat', 'index')->name('sertifikat.index');
+        Route::get('/sertifikat/{id}/send-email', 'sendEmail')->name('sertifikat.sendEmail');
+        Route::get('/sertifikat/create', 'create')->name('sertifikat.create');
+        Route::post('/sertifikat', 'store')->name('sertifikat.store');
+        Route::delete('/sertifikat/{sertifikat}', 'destroy')->name('sertifikat.destroy');
+        Route::get('/sertifikat/{id}/generate-pdf', 'generatePdf')->name('sertifikat.generatePdf');
+    });
+
+    // History Pelatihan
+    Route::resource('history_pelatihan', HistoryPelatihanController::class);
+    Route::get('/get-pelatihan/{user_id}', function($user_id) {
+        $pelatihan = \App\Models\HistoryPelatihan::where('user_id', $user_id)
+                                     ->where('status', 'selesai')
+                                     ->with('pelatihan')
+                                     ->get();
+        
+        return response()->json($pelatihan->map(function($item) {
+            return [
+                'nama_pelatihan' => $item->pelatihan->nama_pelatihan,
+                'status' => $item->status
+            ];
+        }));
+    });
+
+    // Pendapat Anggota
+    Route::resource('pendapat_anggota', PendapatAnggotaController::class);
+    Route::get('/pendapat_anggota/{id}', [PendapatAnggotaController::class, 'show'])->name('pendapat_anggota.show');
+});
+
+// **Admin Routes**
 Route::middleware(['auth', 'isAdmin'])->group(function () {
-    Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('pembayaran.index');
-    Route::get('/pembayaran/create/{pelatihanID}', [PembayaranController::class, 'create'])->name('pembayaran.create');
-    Route::post('/pembayaran', [PembayaranController::class, 'store'])->name('pembayaran.store');
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+  // Route untuk memilih metode pembayaran
+  Route::get('/pembayaran/choose-method/{pelatihanID}', [PembayaranController::class, 'chooseMethod'])
+  ->name('pembayaran.choose.method');
+    // Pelatihan Management
+    Route::resource('/pelatihan_populer', PelatihanController::class);
+    Route::resource('/pelatihan_online', PelatihanOnlineController::class);
+    Route::resource('/pelatihan_offline', PelatihanOfflineController::class);
 
-    Route::get('/pembayaran/{id}/edit', [PembayaranController::class, 'edit'])->name('pembayaran.edit');
-  // Example of route definitions
-Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
-Route::put('/pembayaran/{id}', [PembayaranController::class, 'update'])->name('pembayaran.update');
-    Route::delete('/pembayaran/{id}', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy');
+    // Pembayaran Management
+    Route::controller(PembayaranController::class)->group(function() {
+        Route::get('/pembayaran', 'index')->name('pembayaran.index');
+        Route::get('/pembayaran/{id}/edit', 'edit')->name('pembayaran.edit');
+        Route::put('/pembayaran/{id}', 'update')->name('pembayaran.update');
+        Route::delete('/pembayaran/{id}', 'destroy')->name('pembayaran.destroy');
+    });
+
+    // Kejuruan Management
+    Route::controller(KejuruanController::class)->group(function() {
+        Route::get('/kejuruan', 'index')->name('kejuruan.index');
+        Route::get('/kejuruan/create', 'create')->name('kejuruan.create');
+        Route::post('/kejuruan', 'store')->name('kejuruan.store');
+        Route::get('/kejuruan/{kejuruanID}/edit', 'edit')->name('kejuruan.edit');
+        Route::delete('/kejuruan/{kejuruanID}', 'destroy')->name('kejuruan.destroy');
+        Route::put('/kejuruan/{id}', 'update')->name('kejuruan.update');
+    });
+
+    // Guru Pelatihan Management
+    Route::controller(GuruPelatihanController::class)->group(function() {
+        Route::get('/guru_pelatihan', 'index')->name('guru_pelatihan.index');
+        Route::get('/guru_pelatihan/create', 'create')->name('guru_pelatihan.create');
+        Route::post('/guru_pelatihan', 'store')->name('guru_pelatihan.store');
+        Route::get('/guru_pelatihan/{id}', 'show')->name('guru_pelatihan.show');
+        Route::get('/guru_pelatihan/{id}/edit', 'edit')->name('guru_pelatihan.edit');
+        Route::put('/guru_pelatihan/{id}', 'update')->name('guru_pelatihan.update');
+        Route::delete('/guru_pelatihan/{id}', 'destroy')->name('guru_pelatihan.destroy');
+    });
 });
 
-
-
+// **User Routes**
 Route::middleware(['auth', 'isUser'])->group(function () {
-
-    Route::get('/pembayaran/create/{pelatihanID}', [PembayaranController::class, 'create'])->name('pembayaran.create');
-    Route::post('/pembayaran', [PembayaranController::class, 'store'])->name('pembayaran.store');
-    Route::get('/pembayaran/{id}/edit', [PembayaranController::class, 'edit'])->name('pembayaran.edit');
-    Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
-    Route::put('/pembayaran/{id}', [PembayaranController::class, 'update'])->name('pembayaran.update');
-    Route::delete('/pembayaran/{id}', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy');
+    // User-specific routes if needed
 });
-// Route untuk user
-Route::post('/pembayaran', [PembayaranController::class, 'store'])
-    ->middleware('auth')
-    ->name('pembayaran.store');
-
-
-
-
-
-    use App\Http\Controllers\PendapatAnggotaController;
-
-Route::resource('pendapat_anggota', PendapatAnggotaController::class);
-
-Route::get('/pendapat_anggota/{id}', [PendapatAnggotaController::class, 'show'])->name('pendapat_anggota.show');
-
-
-
-use App\Http\Controllers\SertifikatController;
-
-// Rute untuk halaman utama sertifikat
-Route::get('/sertifikat', [SertifikatController::class, 'index'])->name('sertifikat.index');
-Route::get('/sertifikat/{id}/send-email', [SertifikatController::class, 'sendEmail'])->name('sertifikat.sendEmail');
-
-// Rute untuk membuat sertifikat baru
-Route::get('/sertifikat/create', [SertifikatController::class, 'create'])->name('sertifikat.create');
-
-// Rute untuk menyimpan data sertifikat
-Route::post('/sertifikat', [SertifikatController::class, 'store'])->name('sertifikat.store');
-
-// Rute untuk menghapus sertifikat
-Route::delete('/sertifikat/{sertifikat}', [SertifikatController::class, 'destroy'])->name('sertifikat.destroy');
-
-// Rute untuk mengunduh PDF
-Route::get('/sertifikat/{id}/generate-pdf', [SertifikatController::class, 'generatePdf'])->name('sertifikat.generatePdf');
-
-
-
-use App\Http\Controllers\KejuruanController;
-
-
-Route::get('/kejuruan', [KejuruanController::class, 'index'])->name('kejuruan.index');
-Route::get('/kejuruan/create', [KejuruanController::class, 'create'])->name('kejuruan.create');
-Route::post('/kejuruan', [KejuruanController::class, 'store'])->name('kejuruan.store');
-Route::get('/kejuruan/{kejuruanID}/edit', [KejuruanController::class, 'edit'])->name('kejuruan.edit');
-Route::delete('/kejuruan/{kejuruanID}', [KejuruanController::class, 'destroy'])->name('kejuruan.destroy');
-Route::put('/kejuruan/{id}', [KejuruanController::class, 'update'])->name('kejuruan.update');
-
-
-use App\Http\Controllers\HistoryPelatihanController;
-
-Route::resource('history_pelatihan', HistoryPelatihanController::class);
-
-
-use App\Models\HistoryPelatihan;
-
-Route::get('/get-pelatihan/{user_id}', function($user_id) {
-    $pelatihan = HistoryPelatihan::where('user_id', $user_id)
-                                 ->where('status', 'selesai')
-                                 ->with('pelatihan')
-                                 ->get();
-    
-    return response()->json($pelatihan->map(function($item) {
-        return [
-            'nama_pelatihan' => $item->pelatihan->nama_pelatihan,
-            'status' => $item->status
-        ];
-    }));
-});
-
-
-use App\Http\Controllers\GuruPelatihanController;
-
-Route::get('/guru_pelatihan', [GuruPelatihanController::class, 'index'])->name('guru_pelatihan.index');
-Route::get('/guru_pelatihan/create', [GuruPelatihanController::class, 'create'])->name('guru_pelatihan.create');
-Route::post('/guru_pelatihan', [GuruPelatihanController::class, 'store'])->name('guru_pelatihan.store');
-Route::get('/guru_pelatihan/{id}', [GuruPelatihanController::class, 'show'])->name('guru_pelatihan.show');
-Route::get('/guru_pelatihan/{id}/edit', [GuruPelatihanController::class, 'edit'])->name('guru_pelatihan.edit');
-Route::put('/guru_pelatihan/{id}', [GuruPelatihanController::class, 'update'])->name('guru_pelatihan.update');
-Route::delete('/guru_pelatihan/{id}', [GuruPelatihanController::class, 'destroy'])->name('guru_pelatihan.destroy');
-
-

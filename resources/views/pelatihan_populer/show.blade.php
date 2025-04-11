@@ -194,55 +194,84 @@
 </head>
 <body class="bg-gray-100 font-sans">
 
-   
-<!-- Blue Gradient Background Section -->
-<div class="max-w-full mx-auto">
-    <div class="bg-gradient-to-r from-blue-700 to-purple-600 text-white p-8 rounded-lg shadow-lg w-full">
-        <div class="max-w-fit text-left pl-6">
-            <h1 class="text-2xl font-bold">{{ $pelatihan->nama_pelatihan }}</h1>
-            <p class="text-sm mt-1">{{ $pelatihan->sub_judul }}</p>
-            <hr class="border-t-2 border-white my-4 w-3/4 opacity-60">
-            <div class="mt-4 flex space-x-8">
+    <nav class="bg-white shadow-md p-4 flex items-center justify-between">
+        <a href="#"><img src="logo.png" alt="Digitalent" class="w-32"></a>
+        <div class="flex-grow mx-4">
+            <input type="text" class="w-full px-4 py-2 border rounded-lg" placeholder="Pencarian Akademi, Pelatihan, Tema ...">
+        </div>
+        <div class="flex space-x-2">
+        <a href="{{ route('login') }}" class="px-4 py-2 border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-100">Login</a>
+        <a href="{{ route('register') }}" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Daftar</a>
+    </div>
+    </nav>
 
-                <!-- Kategori Section -->
-                <div class="flex flex-col items-start space-y-2">
-                    <h3 class="text-lg font-semibold">Kategori</h3>
-                    <div class="flex items-center space-x-2">
-                        <i class="fas fa-graduation-cap text-yellow-300"></i>
-                        <span class="text-gray-200">{{ $pelatihan->kategori }}</span>
+    <hr class="border-t-2 border-black my-0">
+
+    <div class="bg-white shadow-md">
+        <nav class="container mx-auto px-6">
+            <ul class="flex flex-wrap justify-center gap-6 p-4 text-gray-700 font-semibold">
+                <li><a href="#" class="hover:text-blue-500 border-b-2 border-transparent hover:border-blue-500 pb-2 transition duration-300">Home</a></li>
+                <li><a href="#" class="hover:text-blue-500 border-b-2 border-transparent hover:border-blue-500 pb-2 transition duration-300">Akademi</a></li>
+                <li><a href="#" class="hover:text-blue-500 border-b-2 border-transparent hover:border-blue-500 pb-2 transition duration-300">Micro Skill</a></li>
+                <li><a href="#" class="hover:text-blue-500 border-b-2 border-transparent hover:border-blue-500 pb-2 transition duration-300">Jadwal</a></li>
+                <li><a href="#" class="hover:text-blue-500 border-b-2 border-transparent hover:border-blue-500 pb-2 transition duration-300">Rilis Media</a></li>
+                <li><a href="#" class="hover:text-blue-500 border-b-2 border-transparent hover:border-blue-500 pb-2 transition duration-300">Tentang Kami</a></li>
+                <li><a href="#" class="hover:text-blue-500 border-b-2 border-transparent hover:border-blue-500 pb-2 transition duration-300">Mitra</a></li>
+                <li><a href="#" class="hover:text-blue-500 border-b-2 border-transparent hover:border-blue-500 pb-2 transition duration-300">Publikasi</a></li>
+                <li><a href="#" class="hover:text-blue-500 border-b-2 border-transparent hover:border-blue-500 pb-2 transition duration-300">Kontak</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Blue Background Section -->
+    <div class="max-w-full mx-auto">
+        <div class="bg-blue-600 text-white p-8 rounded-lg shadow-lg w-full">
+            <div class="max-w-fit text-left pl-6">
+                <h1 class="text-2xl font-bold">{{ $pelatihan->nama_pelatihan }}</h1>
+                <p class="text-sm mt-1">{{ $pelatihan->sub_judul }}</p>
+                <hr class="border-t-2 border-white my-4 w-3/4">
+                <div class="mt-4 flex space-x-6">
+                    
+                    <!-- Kategori Section -->
+                    <div class="flex flex-col items-start space-y-1">
+                        <h3 class="text-lg font-semibold">Kategori</h3>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>{{ $pelatihan->kategori }}</span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Kapasitas Section -->
-                <div class="flex flex-col items-start space-y-2">
-                    <h3 class="text-lg font-semibold">Peserta Terdaftar</h3>
-                    <div class="flex items-center space-x-2">
-                        <i class="fas fa-users text-green-300"></i>
-                        <span class="text-gray-200">- Peserta</span>
+                    <!-- Kapasitas Section -->
+                    <div class="flex flex-col items-start space-y-1">
+                        <h3 class="text-lg font-semibold">Peserta Terdaftar</h3>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-users"></i>
+                            <span>- Peserta</span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Self Enrolment Section -->
-                <div class="flex flex-col items-start space-y-2">
-                    <h3 class="text-lg font-semibold">Alur Pendaftaran</h3>
-                    <div class="flex items-center space-x-2">
-                        <i class="fas fa-recycle text-pink-300"></i>
-                        <span class="text-gray-200">Self Enrolment</span>
+                    <!-- Self Enrolment Section -->
+                    <div class="flex flex-col items-start space-y-1">
+                        <h3 class="text-lg font-semibold">Alur Pendaftaran</h3>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-recycle"></i>
+                            <span>Self Enrolment</span>
+                        </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
+        
+
+        
     </div>
-</div>
 
-<!-- Image Section -->
-<div class="mt-6 flex justify-start pl-9">
+    <!-- Image Below -->
+    <div class="mt-6 flex justify-start pl-9">
     <img src="{{ $pelatihan->gambar_pelatihan ? asset('storage/' . $pelatihan->gambar_pelatihan) : 'https://via.placeholder.com/300' }}" 
-        alt="Pelatihan Image" 
-        class="w-2/4 rounded-lg shadow-xl border-4 border-white">
+                         alt="Pelatihan Image" class="w-2/4 rounded-lg shadow-lg">
 </div>
-
 
 <!-- Informasi dan Silabus Section -->
 <div class="mt-6 pl-9">
@@ -411,32 +440,334 @@
 
     <!-- Floating Box in the Right -->
     <div class="right-box">
-    <div class="bg-white p-4 mt-6 rounded-lg shadow-lg flex items-center gap-4">
-        <img src="{{ $pelatihan->foto_pelatihan ? asset('storage/' . $pelatihan->foto_pelatihan) : 'https://via.placeholder.com/300' }}" 
-             class="w-24 h-24 rounded-full object-cover border" 
-             alt="Foto Pelatihan">
-        <div class="flex-1">
-            <h2 class="text-lg font-bold">{{ $pelatihan->nama_pelatihan }}</h2>
-            <p class="text-gray-600 text-sm">Pelatihan yang diselenggarakan secara self-paced learning atau dikerjakan secara mandiri.</p>
-           
-            @if(Auth::check())
-                <form action="{{ route('pelatihan.daftar', $pelatihan->pelatihanID) }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="userID" value="{{ Auth::id() }}">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Daftar
-                    </button>
-                </form>
-            @else
-                <p>Anda harus <a href="{{ route('login') }}">login</a> terlebih dahulu.</p>
-            @endif
+    <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
+        <h2 class="text-gray-600 text-sm font-semibold mb-2">{{ $pelatihan->nama_pelatihan }}</h2>
+        <p class="text-gray-800 text-lg font-semibold">Paket {{ $pelatihan->nama_pelatihan }} 6 Bulan</p>
+        <p class="text-gray-800 text-lg mb-4">Rp {{ number_format($pelatihan->harga, 0, ',', '.') }}</p>
+        
+        <input type="text" placeholder="Kode Promo / Kupon" class="w-full p-2 border border-gray-300 rounded mb-2">
+        <button class="w-full p-2 border border-gray-300 rounded mb-4 flex items-center justify-center text-teal-600">
+            <span>Lihat Promo Hari Ini</span>
+            <i class="fas fa-tag ml-2"></i>
+        </button>
+        
+<!-- Tombol Pilih Metode Pembayaran -->
+<button id="openModal" class="w-full p-2 bg-teal-600 text-white rounded mb-4 flex items-center justify-center">
+    <span>Pilih Metode Pembayaran</span>
+    <i class="fas fa-chevron-right ml-2"></i>
+</button>
 
-            <a href="#" class="flex items-center bg-green-600 text-white px-3 py-1.5 rounded-lg mt-3 inline-block text-sm font-semibold">
-                <i class="fas fa-share-alt mr-2"></i> Bagikan pelatihan ini
-            </a>
+<!-- Metode Pembayaran yang Dipilih -->
+<div id="selectedPayment" class="mb-4 text-center text-lg font-semibold text-gray-700"></div>
+
+<div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div class="bg-white rounded-lg w-full max-w-md mx-4 overflow-hidden shadow-lg">
+        <div class="p-4 border-b flex justify-between items-center">
+            <h2 class="text-lg font-bold">Pilih Metode Pembayaran</h2>
+            <button id="closeModal" class="text-gray-500 hover:text-red-500 text-xl">&times;</button>
+        </div>
+        <div class="p-4 max-h-[70vh] overflow-y-auto">
+            <!-- Metode Pembayaran -->
+            <div class="space-y-4">
+                <!-- Kode QR -->
+                <div>
+                    <h3 class="font-semibold text-gray-700 mb-2">Kode QR</h3>
+                    <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
+                        <input type="radio" name="paymentMethod" value="QRIS" class="mr-3">
+                        <div class="flex items-center flex-1">
+                            <img src="{{ asset('img/Q.png') }}" alt="QRIS" class="h-8 w-8 mr-3">
+                            <div>
+                                <span class="font-medium">QRIS</span>
+                                <p class="text-xs text-gray-500">Scan QR Code untuk pembayaran</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-check text-teal-600 hidden"></i>
+                    </label>
+                </div>
+
+                <!-- Dompet Digital / E-Wallet -->
+                <div>
+                    <h3 class="font-semibold text-gray-700 mb-2">Dompet Digital</h3>
+                    <div class="space-y-3">
+                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
+                            <input type="radio" name="paymentMethod" value="Dana" class="mr-3">
+                            <div class="flex items-center flex-1">
+                                <img src="{{ asset('img/D.png') }}" alt="Dana" class="h-8 w-8 mr-3">
+                                <div>
+                                    <span class="font-medium">Dana</span>
+                                    <p class="text-xs text-gray-500">Transfer instan tanpa admin</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-check text-teal-600 hidden"></i>
+                        </label>
+                        
+                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
+                            <input type="radio" name="paymentMethod" value="OVO" class="mr-3">
+                            <div class="flex items-center flex-1">
+                                <img src="{{ asset('img/O.jpg') }}" alt="OVO" class="h-8 w-8 mr-3">
+                                <div>
+                                    <span class="font-medium">OVO</span>
+                                    <p class="text-xs text-gray-500">Bayar dengan saldo OVO</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-check text-teal-600 hidden"></i>
+                        </label>
+                        
+                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
+                            <input type="radio" name="paymentMethod" value="Gopay" class="mr-3">
+                            <div class="flex items-center flex-1">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg" alt="Gopay" class="h-8 w-8 mr-3">
+                                <div>
+                                    <span class="font-medium">GoPay</span>
+                                    <p class="text-xs text-gray-500">Bayar dengan GoPay</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-check text-teal-600 hidden"></i>
+                        </label>
+                        
+                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
+                            <input type="radio" name="paymentMethod" value="ShopeePay" class="mr-3">
+                            <div class="flex items-center flex-1">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/ShopeePay_logo.svg" alt="ShopeePay" class="h-8 w-8 mr-3">
+                                <div>
+                                    <span class="font-medium">ShopeePay</span>
+                                    <p class="text-xs text-gray-500">Bayar dengan ShopeePay</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-check text-teal-600 hidden"></i>
+                        </label>
+                        
+                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
+                            <input type="radio" name="paymentMethod" value="LinkAja" class="mr-3">
+                            <div class="flex items-center flex-1">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/LinkAja_logo_2019.svg" alt="LinkAja" class="h-8 w-8 mr-3">
+                                <div>
+                                    <span class="font-medium">LinkAja</span>
+                                    <p class="text-xs text-gray-500">Bayar dengan LinkAja</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-check text-teal-600 hidden"></i>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Transfer Bank -->
+                <div>
+                    <h3 class="font-semibold text-gray-700 mb-2">Transfer Bank</h3>
+                    <div class="space-y-3">
+                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
+                            <input type="radio" name="paymentMethod" value="BCA" class="mr-3">
+                            <div class="flex items-center flex-1">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/BCA_logo.svg" alt="BCA" class="h-8 w-8 mr-3">
+                                <div>
+                                    <span class="font-medium">BCA</span>
+                                    <p class="text-xs text-gray-500">Bank Central Asia</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-check text-teal-600 hidden"></i>
+                        </label>
+                        
+                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
+                            <input type="radio" name="paymentMethod" value="Mandiri" class="mr-3">
+                            <div class="flex items-center flex-1">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Bank_Mandiri_logo_2016.svg" alt="Mandiri" class="h-8 w-8 mr-3">
+                                <div>
+                                    <span class="font-medium">Mandiri</span>
+                                    <p class="text-xs text-gray-500">Bank Mandiri</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-check text-teal-600 hidden"></i>
+                        </label>
+                        
+                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
+                            <input type="radio" name="paymentMethod" value="BRI" class="mr-3">
+                            <div class="flex items-center flex-1">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Logo_BRI_%28Bank_Rakyat_Indonesia%29.svg" alt="BRI" class="h-8 w-8 mr-3">
+                                <div>
+                                    <span class="font-medium">BRI</span>
+                                    <p class="text-xs text-gray-500">Bank Rakyat Indonesia</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-check text-teal-600 hidden"></i>
+                        </label>
+                        
+                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
+                            <input type="radio" name="paymentMethod" value="BNI" class="mr-3">
+                            <div class="flex items-center flex-1">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/BNI_logo.svg" alt="BNI" class="h-8 w-8 mr-3">
+                                <div>
+                                    <span class="font-medium">BNI</span>
+                                    <p class="text-xs text-gray-500">Bank Negara Indonesia</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-check text-teal-600 hidden"></i>
+                        </label>
+                        
+                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
+                            <input type="radio" name="paymentMethod" value="BSI" class="mr-3">
+                            <div class="flex items-center flex-1">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Logo_Bank_Syariah_Indonesia_%282021%29.svg" alt="BSI" class="h-8 w-8 mr-3">
+                                <div>
+                                    <span class="font-medium">BSI</span>
+                                    <p class="text-xs text-gray-500">Bank Syariah Indonesia</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-check text-teal-600 hidden"></i>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Modal -->
+        <div class="p-4 border-t">
+            <button id="confirmPayment" class="w-full bg-teal-600 hover:bg-teal-700 text-white px-4 py-3 rounded-lg font-medium transition">Konfirmasi Pembayaran</button>
         </div>
     </div>
 </div>
+
+<!-- Informasi Total -->
+<div class="flex justify-between text-gray-800 mb-1">
+    <span>Subtotal</span>
+    <span>Rp {{ number_format($pelatihan->harga, 0, ',', '.') }}</span>
+</div>
+
+<div class="flex justify-between text-gray-800 font-semibold text-lg mb-4">
+    <span>Total</span>
+    <span>Rp {{ number_format($pelatihan->harga, 0, ',', '.') }}</span>
+</div>
+
+<p class="text-gray-500 text-sm mb-4">+ kode unik</p>
+
+<!-- Tombol Lanjut Bayar -->
+<div class="p-4 border-t flex flex-col items-center">
+    <button id="btnLanjutBayar" class="w-full p-3 bg-gray-200 text-gray-500 rounded-lg font-medium" disabled>Lanjut Bayar</button>
+    <div id="pesanTunggu" class="mt-2 text-sm text-gray-600 hidden"></div>
+</div>
+
+<!-- JavaScript -->
+<script>
+    const openModal = document.getElementById('openModal');
+    const closeModal = document.getElementById('closeModal');
+    const paymentModal = document.getElementById('paymentModal');
+    const confirmPayment = document.getElementById('confirmPayment');
+    const selectedPayment = document.getElementById('selectedPayment');
+    const btnLanjutBayar = document.getElementById('btnLanjutBayar');
+    const pesanTunggu = document.getElementById('pesanTunggu');
+
+    // Buka modal
+    openModal.addEventListener('click', () => {
+        paymentModal.classList.remove('hidden');
+        paymentModal.classList.add('flex');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+    });
+
+    // Tutup modal
+    closeModal.addEventListener('click', () => {
+        paymentModal.classList.add('hidden');
+        document.body.style.overflow = 'auto'; // Re-enable scrolling
+    });
+
+    // Close modal when clicking outside
+    paymentModal.addEventListener('click', (e) => {
+        if (e.target === paymentModal) {
+            paymentModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Highlight selected payment method
+    document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            // Remove all check icons
+            document.querySelectorAll('.fa-check').forEach(icon => {
+                icon.classList.add('hidden');
+            });
+            
+            // Add check icon to selected option
+            if (this.checked) {
+                this.closest('label').querySelector('.fa-check').classList.remove('hidden');
+            }
+        });
+    });
+
+    // Pilih metode pembayaran
+    confirmPayment.addEventListener('click', () => {
+        const selected = document.querySelector('input[name="paymentMethod"]:checked');
+        if (selected) {
+            // Store the selected payment method in localStorage
+            localStorage.setItem('selectedPaymentMethod', selected.value);
+            
+            selectedPayment.innerHTML = `
+                <div class="flex items-center justify-center">
+                    <img src="${selected.closest('label').querySelector('img').src}" 
+                         alt="${selected.value}" class="h-6 w-6 mr-2">
+                    <span>${selected.value}</span>
+                </div>
+            `;
+            
+            paymentModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            
+            btnLanjutBayar.disabled = false;
+            btnLanjutBayar.classList.remove('bg-gray-200', 'text-gray-500');
+            btnLanjutBayar.classList.add('bg-teal-600', 'text-white', 'hover:bg-teal-700');
+        } else {
+            alert('Silakan pilih metode pembayaran terlebih dahulu.');
+        }
+    });
+
+    // Tombol Lanjut Bayar dengan hitungan mundur
+    btnLanjutBayar.addEventListener('click', () => {
+        const selectedPaymentMethod = localStorage.getItem('selectedPaymentMethod');
+        if (!selectedPaymentMethod) {
+            alert("Metode pembayaran belum dipilih.");
+            return;
+        }
+
+        let countdown = 5;
+        btnLanjutBayar.disabled = true;
+        pesanTunggu.classList.remove('hidden');
+
+        const interval = setInterval(() => {
+            pesanTunggu.innerText = `Memproses pembayaran... (${countdown} detik)`;
+            countdown--;
+
+            if (countdown < 0) {
+                clearInterval(interval);
+                // Redirect with the selected payment method
+                window.location.href = "{{ route('pembayaran.create', ['pelatihanID' => $pelatihan->pelatihanID]) }}?method=" + encodeURIComponent(selectedPaymentMethod);
+            }
+        }, 1000);
+    });
+
+    // Check if there's a previously selected payment method
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedMethod = localStorage.getItem('selectedPaymentMethod');
+        if (savedMethod) {
+            // Set the radio button
+            const radio = document.querySelector(`input[name="paymentMethod"][value="${savedMethod}"]`);
+            if (radio) {
+                radio.checked = true;
+                radio.dispatchEvent(new Event('change')); // Trigger the change event
+                
+                const label = radio.closest('label');
+                selectedPayment.innerHTML = `
+                    <div class="flex items-center justify-center">
+                        <img src="${label.querySelector('img').src}" 
+                             alt="${savedMethod}" class="h-6 w-6 mr-2">
+                        <span>${savedMethod}</span>
+                    </div>
+                `;
+                
+                btnLanjutBayar.disabled = false;
+                btnLanjutBayar.classList.remove('bg-gray-200', 'text-gray-500');
+                btnLanjutBayar.classList.add('bg-teal-600', 'text-white', 'hover:bg-teal-700');
+            }
+        }
+    });
+</script>
+
 
     <script>
     const isLoggedIn = {{ auth()->check() ? 'true' : 'false' }};

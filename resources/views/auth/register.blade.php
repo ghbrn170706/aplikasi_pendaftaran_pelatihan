@@ -4,134 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom styles */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
         body {
-            background-color: #f4f7fc;
+            font-family: 'Inter', sans-serif;
         }
-
-        .container {
-            padding-top: 50px;
+        
+        .video-container {
+            border-radius: 0;
+            overflow: hidden;
+            height: 100vh;
         }
-
-        .col-md-6 {
-            padding: 20px;
-        }
-
-        .img-fluid {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        .form-container {
-            background-color: #ffffff;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            padding: 40px;
-        }
-
-        .alert {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #e9f7ef;
-            border: 1px solid #d4edda;
-            color: #155724;
-            border-radius: 5px;
-        }
-
-        .btn-custom {
-            background-color: #4e73df;
-            color: white;
-            border-radius: 20px;
+        
+        .video-container video {
+            object-fit: cover;
             width: 100%;
-            padding: 12px;
-            border: none;
-            font-weight: bold;
-        }
-
-        .btn-custom:hover {
-            background-color: #2e59d9;
-            color: white;
-        }
-
-        .text-muted {
-            color: #6c757d;
+            height: 100%;
         }
     </style>
 </head>
-<body>
-<div class="container">
-    <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
-        <!-- Left Column (Image) -->
-        <div class="col-md-6 text-center">
-    <video class="img-fluid" autoplay loop muted>
-        <source src="{{ asset('videos/vidio2.mp4') }}" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-</div>
-
-
-        <!-- Right Column (Register Form) -->
-        <div class="col-md-6">
-            <div class="form-container">
-            <form method="POST" action="{{ route('register') }}">
-    @csrf
-
-    <!-- Name -->
-    <div>
-        <x-label for="name" :value="__('Name')" />
-        <x-input id="name" class="block mt-1 w-full form-control" type="text" name="name" :value="old('name')" required autofocus />
-    </div>
-
-    <!-- Email Address -->
-    <div class="mt-4">
-        <x-label for="email" :value="__('Email')" />
-        <x-input id="email" class="block mt-1 w-full form-control" type="email" name="email" :value="old('email')" required />
-    </div>
-
-    <!-- Password -->
-    <div class="mt-4">
-        <x-label for="password" :value="__('Password')" />
-        <x-input id="password" class="block mt-1 w-full form-control" type="password" name="password" required autocomplete="new-password" />
-    </div>
-
-    <!-- Confirm Password -->
-    <div class="mt-4">
-        <x-label for="password_confirmation" :value="__('Confirm Password')" />
-        <x-input id="password_confirmation" class="block mt-1 w-full form-control" type="password" name="password_confirmation" required />
-    </div>
-
-    @if(session('message'))
-        <div class="alert alert-success">
-            {{ session('message') }}
+<body class="h-screen">
+    <div class="flex h-full">
+        <!-- Left side - Registration Form -->
+        <div class="w-full md:w-1/2 flex items-center justify-center p-6 bg-white">
+            <div class="w-full max-w-md">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Buat Akun Baru</h2>
+                    <p class="text-gray-600">Isi form berikut untuk mendaftar</p>
+                </div>
+                
+                <form method="POST" action="{{ route('register') }}" class="space-y-4">
+                    @csrf
+                    
+                    <!-- Name Input -->
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                        <input id="name" name="name" type="text" value="{{ old('name') }}" required autofocus
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300">
+                    </div>
+                    
+                    <!-- Email Input -->
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input id="email" name="email" type="email" value="{{ old('email') }}" required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300">
+                    </div>
+                    
+                    <!-- Password Input -->
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input id="password" name="password" type="password" required autocomplete="new-password"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300">
+                    </div>
+                    
+                    <!-- Confirm Password Input -->
+                    <div>
+                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
+                        <input id="password_confirmation" name="password_confirmation" type="password" required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300">
+                    </div>
+                    
+                    <!-- Success Message -->
+                    @if(session('message'))
+                        <div class="p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+                            {{ session('message') }}
+                        </div>
+                    @endif
+                    
+                    <!-- OTP Message -->
+                    @if(session('otp_sent'))
+                        <div class="p-4 bg-blue-100 border border-blue-400 text-blue-700 rounded">
+                            OTP telah dikirim ke email Anda. Silakan masukkan OTP untuk melanjutkan.
+                        </div>
+                    @endif
+                    
+                    <!-- Register Button -->
+                    <button type="submit" 
+                        class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                        Daftar
+                    </button>
+                    
+                    <!-- Login Link -->
+                    <div class="text-center mt-4">
+                        <p class="text-sm text-gray-600">
+                            Sudah memiliki akun?
+                            <a href="{{ route('login') }}" class="font-medium text-blue-600 hover:text-blue-500">
+                                Masuk disini
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
         </div>
-    @endif
-
-    <!-- Pesan Verifikasi OTP -->
-    @if(session('otp_sent'))
-        <div class="alert alert-info mt-3">
-            OTP telah dikirim ke email Anda. Silakan masukkan OTP untuk melanjutkan.
-        </div>
-    @endif
-
-    <div class="d-flex justify-content-between mt-4">
-        <a class="text-muted text-sm" href="{{ route('login') }}">
-            {{ __('Already registered?') }}
-        </a>
-
-        <x-button class="btn-custom">
-            {{ __('Register') }}
-        </x-button>
-    </div>
-</form>
-
+        
+        <!-- Right side - Full Height Video -->
+        <div class="hidden md:block md:w-1/2 relative">
+            <div class="video-container">
+                <video autoplay loop muted playsinline>
+                    <source src="{{ asset('videos/pelatihan.mp4') }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-30"></div>
+            <div class="absolute inset-0 flex items-center justify-center p-12">
+                <div class="text-white text-center">
+                    <h3 class="text-4xl font-bold mb-4">Bergabunglah Dengan Kami</h3>
+                    <p class="text-xl opacity-90">Mulai perjalanan Anda bersama kami hari ini</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

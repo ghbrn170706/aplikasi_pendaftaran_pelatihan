@@ -38,6 +38,7 @@ class PelatihanOnlineController extends Controller
         $pelatihan = new PelatihanOnline;
         $pelatihan->nama_pelatihan = $request->nama_pelatihan;
         $pelatihan->jenis = $request->jenis;
+        $pelatihan->deskripsi = $request->deskripsi;
         $pelatihan->jadwal_mulai = $request->jadwal_mulai;
         $pelatihan->jadwal_selesai = $request->jadwal_selesai;
         $pelatihan->kapasitas = $request->kapasitas;
@@ -47,7 +48,7 @@ class PelatihanOnlineController extends Controller
         if ($request->hasFile('foto_pelatihan')) {
             $file = $request->file('foto_pelatihan');
             $filePath = $file->store('public/foto_pelatihan');
-            $pelatihan->foto_pelatihan = $filePath;
+            $pelatihan->foto_pelatihan = str_replace('public/', '', $filePath);
         }
 
         $pelatihan->save();
@@ -68,6 +69,7 @@ class PelatihanOnlineController extends Controller
         $request->validate([
             'nama_pelatihan' => 'required|string|max:255',
             'jenis' => 'required|string|max:100',
+            'deskripsi' => 'required|string',
             'jadwal_mulai' => 'required|date',
             'jadwal_selesai' => 'required|date',
             'kapasitas' => 'required|integer',
@@ -78,6 +80,7 @@ class PelatihanOnlineController extends Controller
         $pelatihan = PelatihanOnline::findOrFail($id);
         $pelatihan->nama_pelatihan = $request->nama_pelatihan;
         $pelatihan->jenis = $request->jenis;
+        $pelatihan->deskripsi = $request->deskripsi;
         $pelatihan->jadwal_mulai = $request->jadwal_mulai;
         $pelatihan->jadwal_selesai = $request->jadwal_selesai;
         $pelatihan->kapasitas = $request->kapasitas;
@@ -85,9 +88,14 @@ class PelatihanOnlineController extends Controller
 
         // Menyimpan foto pelatihan jika ada dan mengganti foto lama
         if ($request->hasFile('foto_pelatihan')) {
+            // Hapus foto lama jika ada
+            if ($pelatihan->foto_pelatihan) {
+                Storage::delete('public/' . $pelatihan->foto_pelatihan);
+            }
+            
             $file = $request->file('foto_pelatihan');
             $filePath = $file->store('public/foto_pelatihan');
-            $pelatihan->foto_pelatihan = $filePath;
+            $pelatihan->foto_pelatihan = str_replace('public/', '', $filePath);
         }
 
         $pelatihan->save();
@@ -99,8 +107,21 @@ class PelatihanOnlineController extends Controller
     public function destroy($id)
     {
         $pelatihan = PelatihanOnline::findOrFail($id);
+        
+        // Hapus foto jika ada
+        if ($pelatihan->foto_pelatihan) {
+            Storage::delete('public/' . $pelatihan->foto_pelatihan);
+        }
+        
         $pelatihan->delete();
 
         return redirect()->route('pelatihan_online.index')->with('success', 'Pelatihan berhasil dihapus!');
     }
+
+    public function show($id)
+{
+    $pelatihan = PelatihanOnline::findOrFail($id);
+    return view('pelatihan_online.show', compact('pelatihan'));
+}
+
 }

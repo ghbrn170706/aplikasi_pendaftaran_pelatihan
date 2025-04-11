@@ -24,52 +24,55 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover">
-                    <thead class="table-light">
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Pelatihan</th>
-                            <th scope="col">User</th>
-                            <th scope="col">Tanggal Bayar</th>
-                            <th scope="col">Jumlah Bayar</th>
-                            <th scope="col">Bukti Bayar</th>
-                            <th scope="col">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if ($pembayaran)
-                            <tr>
-                                <td>{{ $pembayaran->pembayaranID }}</td>
-                                <td>{{ $pembayaran->pelatihan->nama_pelatihan ?? '-' }}</td>
-                                <td>{{ $pembayaran->user->name ?? '-' }}</td>
-                                <td>{{ $pembayaran->tanggal_bayar }}</td>
-                                <td>{{ number_format($pembayaran->jumlah_bayar, 2) }}</td>
-                                <td>
-                                    @if($pembayaran->bukti_bayar)
-                                        <img 
-                                            src="{{ asset('storage/' . $pembayaran->bukti_bayar) }}" 
-                                            alt="Bukti Bayar" 
-                                            class="img-thumbnail cursor-pointer" 
-                                            style="width: 80px; height: 80px;"
-                                            data-bs-toggle="modal" 
-                                            data-bs-target="#imageModal"
-                                            onclick="openModal('{{ asset('storage/' . $pembayaran->bukti_bayar) }}')"
-                                        >
-                                    @else
-                                        <span class="text-muted">Tidak ada bukti</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm">
-                                        <i class="fas fa-eye"></i> Lihat Detail
-                                    </button>
-                                </td>
-                            </tr>
-                        @else
-                            <tr>
-                                <td colspan="7" class="text-center text-muted py-4">Tidak ada data pembayaran</td>
-                            </tr>
-                        @endif
-                    </tbody>
+                <thead class="table-light">
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Pelatihan</th>
+        <th scope="col">User</th>
+        <th scope="col">Tanggal Bayar</th>
+        <th scope="col">Jumlah Bayar</th>
+        <th scope="col">Metode</th> {{-- Kolom baru --}}
+        <th scope="col">Bukti Bayar</th>
+        <th scope="col">Aksi</th>
+    </tr>
+</thead>
+<tbody>
+    @if ($pembayaran)
+        <tr>
+            <td>{{ $pembayaran->pembayaranID }}</td>
+            <td>{{ $pembayaran->pelatihan->nama_pelatihan ?? '-' }}</td>
+            <td>{{ $pembayaran->user->name ?? '-' }}</td>
+            <td>{{ $pembayaran->tanggal_bayar }}</td>
+            <td>{{ number_format($pembayaran->jumlah_bayar, 2) }}</td>
+            <td>{{ $pembayaran->metode_pembayaran ?? '-' }}</td> {{-- Tampilkan metode pembayaran --}}
+            <td>
+                @if($pembayaran->bukti_bayar)
+                    <img 
+                        src="{{ asset('storage/' . $pembayaran->bukti_bayar) }}" 
+                        alt="Bukti Bayar" 
+                        class="img-thumbnail cursor-pointer" 
+                        style="width: 80px; height: 80px;"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#imageModal"
+                        onclick="openModal('{{ asset('storage/' . $pembayaran->bukti_bayar) }}')"
+                    >
+                @else
+                    <span class="text-muted">Tidak ada bukti</span>
+                @endif
+            </td>
+            <td>
+                <button class="btn btn-primary btn-sm">
+                    <i class="fas fa-eye"></i> Lihat Detail
+                </button>
+            </td>
+        </tr>
+    @else
+        <tr>
+            <td colspan="8" class="text-center text-muted py-4">Tidak ada data pembayaran</td>
+        </tr>
+    @endif
+</tbody>
+
                 </table>
             </div>
         </div>

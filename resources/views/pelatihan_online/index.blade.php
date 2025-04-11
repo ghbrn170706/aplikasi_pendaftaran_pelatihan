@@ -59,9 +59,10 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <a href="{{ url('/pelatihan_online/' . $pelatihan->pelatihanID) }}" 
-                                       class="text-primary text-decoration-none">Lihat Detail</a>
-                                </td>
+    <a href="{{ route('pelatihan_online.show', $pelatihan->pelatihanonlineID) }}" 
+       class="text-primary text-decoration-none">Lihat Detail</a>
+</td>
+
                             </tr>
                         @endforeach
                     </tbody>
