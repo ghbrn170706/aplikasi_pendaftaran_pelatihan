@@ -59,22 +59,21 @@
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <span class="menu-icon">
-                <i class="mdi mdi-laptop"></i>
-              </span>
-              <span class="menu-title">Pelatihan</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/pelatihan_populer">Pelatihan Populer</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/pelatihan_offline">Pelatihan Offline</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/pelatihan_online">Pelatihan Online</a></li>
-              </ul>
-            </div>
-          </li>
+          <li class="nav-item menu-items" x-data="{ open: false }">
+  <a href="#" @click.prevent="open = !open" class="nav-link">
+    <span class="menu-icon">
+      <i class="mdi mdi-laptop"></i>
+    </span>
+    <span class="menu-title">Pelatihan</span>
+    <i class="menu-arrow"></i>
+  </a>
+  <div x-show="open" x-transition class="ml-10 mt-2 space-y-2">
+    <a href="/pelatihan_populer" class="nav-link block text-sm text-gray-700 hover:text-indigo-600">Pelatihan Populer</a>
+    <a href="/pelatihan_offline" class="nav-link block text-sm text-gray-700 hover:text-indigo-600">Pelatihan Offline</a>
+    <a href="/pelatihan_online" class="nav-link block text-sm text-gray-700 hover:text-indigo-600">Pelatihan Online</a>
+  </div>
+</li>
+
           <li class="nav-item menu-items">
             <a class="nav-link" href="/profile">
               <span class="menu-icon">
@@ -124,6 +123,17 @@
               <span class="menu-title">Dokumentasi</span>
             </a>
           </li>
+
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="/guru_pelatihan">
+              <span class="menu-icon">
+                <i class="mdi mdi-file-document-box"></i>
+              </span>
+              <span class="menu-title">Guru</span>
+            </a>
+          </li>
+
+
         </ul>
       </nav>
       @endcan
@@ -164,13 +174,12 @@
               <span class="menu-title">History Pelatihan</span>
             </a>
           </li>
-          
           <li class="nav-item menu-items">
-            <a class="nav-link" href="dokumentasi">
+            <a class="nav-link" href="/pembayaran-history">
               <span class="menu-icon">
                 <i class="mdi mdi-file-document-box"></i>
               </span>
-              <span class="menu-title">Hostory Pembayaran</span>
+              <span class="menu-title">History Pembayaran</span>
             </a>
           </li>
         </ul>

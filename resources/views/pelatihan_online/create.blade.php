@@ -4,74 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Pelatihan</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-light">
-    <div class="container mt-5">
-        <div class="card shadow-lg">
-            <div class="card-header bg-primary text-white text-center">
-                <h2>Tambah Pelatihan</h2>
+<body class="bg-gray-100">
+
+<div class="container mx-auto px-4 py-8">
+    <!-- Card Header -->
+    <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Tambah Pelatihan</h2>
+
+        <!-- Form Section -->
+        <form action="{{ route('pelatihan_online.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+
+            <!-- Nama Pelatihan -->
+            <div class="mb-4">
+                <label for="nama_pelatihan" class="block text-sm font-medium text-gray-700">Nama Pelatihan</label>
+                <input type="text" id="nama_pelatihan" name="nama_pelatihan" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
-            <div class="card-body">
-                <form action="{{ route('pelatihan_online.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    
-                    <div class="mb-3">
-                        <label for="nama_pelatihan" class="form-label">Nama Pelatihan</label>
-                        <input type="text" class="form-control" id="nama_pelatihan" name="nama_pelatihan" required>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="deskripsi" class="form-label">Deskripsi</label>
-                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" required></textarea>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="jenis" class="form-label">Jenis</label>
-                        <select class="form-select" id="jenis" name="jenis" required>
-                            <option value="online" selected>Online</option>
-                        </select>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="link_zoom" class="form-label">Link Zoom</label>
-                        <input type="url" class="form-control" id="link_zoom" name="link_zoom" required>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="jadwal_mulai" class="form-label">Jadwal Mulai</label>
-                            <input type="date" class="form-control" id="jadwal_mulai" name="jadwal_mulai" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="jadwal_selesai" class="form-label">Jadwal Selesai</label>
-                            <input type="date" class="form-control" id="jadwal_selesai" name="jadwal_selesai" required>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="kapasitas" class="form-label">Kapasitas</label>
-                            <input type="number" class="form-control" id="kapasitas" name="kapasitas" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="harga" class="form-label">Harga</label>
-                            <input type="number" class="form-control" id="harga" name="harga" step="0.01" required>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="foto_pelatihan" class="form-label">Foto Pelatihan</label>
-                        <input type="file" class="form-control" id="foto_pelatihan" name="foto_pelatihan">
-                    </div>
-                    
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Create</button>
-                    </div>
-                </form>
+
+            <!-- Deskripsi -->
+            <div class="mb-4">
+                <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
+                <textarea id="deskripsi" name="deskripsi" rows="4" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
             </div>
-        </div>
+
+            <!-- Jenis -->
+            <div class="mb-4">
+                <label for="jenis" class="block text-sm font-medium text-gray-700">Jenis</label>
+                <select id="jenis" name="jenis" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <option value="online" selected>Online</option>
+                </select>
+            </div>
+
+            <!-- Link Zoom -->
+            <div class="mb-4">
+                <label for="link_zoom" class="block text-sm font-medium text-gray-700">Link Zoom</label>
+                <input type="url" id="link_zoom" name="link_zoom" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
+
+            <!-- Jadwal Mulai & Selesai -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="jadwal_mulai" class="block text-sm font-medium text-gray-700">Jadwal Mulai</label>
+                    <input type="date" id="jadwal_mulai" name="jadwal_mulai" required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="jadwal_selesai" class="block text-sm font-medium text-gray-700">Jadwal Selesai</label>
+                    <input type="date" id="jadwal_selesai" name="jadwal_selesai" required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+            </div>
+
+            <!-- Kapasitas & Harga -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="kapasitas" class="block text-sm font-medium text-gray-700">Kapasitas</label>
+                    <input type="number" id="kapasitas" name="kapasitas" required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="harga" class="block text-sm font-medium text-gray-700">Harga</label>
+                    <input type="number" id="harga" name="harga" step="0.01" required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+            </div>
+
+            <!-- Foto Pelatihan -->
+            <div class="mb-4">
+                <label for="foto_pelatihan" class="block text-sm font-medium text-gray-700">Foto Pelatihan</label>
+                <input type="file" id="foto_pelatihan" name="foto_pelatihan"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex justify-center gap-4">
+                <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Tambah Pelatihan
+                </button>
+                <a href="{{ route('pelatihan.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Batal
+                </a>
+            </div>
+        </form>
     </div>
+</div>
+
 </body>
 </html>

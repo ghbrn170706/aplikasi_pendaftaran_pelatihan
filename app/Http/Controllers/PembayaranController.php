@@ -13,7 +13,9 @@ class PembayaranController extends Controller
 {
     public function index()
     {
-        $pembayaran = Pembayaran::with(['pelatihan', 'user'])->latest()->first();
+        // Ambil semua data pembayaran dengan relasi pelatihan dan user, urutkan berdasarkan tanggal bayar terbaru
+        $pembayaran = Pembayaran::with(['pelatihan', 'user'])->orderBy('tanggal_bayar', 'desc')->paginate(10);
+    
         return view('pembayaran.index', compact('pembayaran'));
     }
 
@@ -61,7 +63,7 @@ class PembayaranController extends Controller
             'bukti_bayar' => $buktiBayarPath,
         ]);
 
-        return redirect()->route('pembayaran.index')->with('success', 'Pembayaran berhasil disimpan.');
+        return redirect()->route('dashboard')->with('success', 'Pembayaran berhasil disimpan.');
     }
 
     public function show($id)
@@ -144,4 +146,24 @@ class PembayaranController extends Controller
 
         return redirect()->route('pembayaran.index')->with('success', 'Pembayaran berhasil dihapus.');
     }
+
+    public function history()
+    {
+        // Pastikan user sudah login
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+    
+        // Ambil data hanya untuk user yang login
+        $pembayaran = Pembayaran::with(['pelatihan'])
+            ->where('userID', auth()->id()) // Filter strict by logged in user
+            ->orderBy('tanggal_bayar', 'desc')
+            ->paginate(10);
+    
+        // Debug data (hapus setelah testing)
+        // dd($pembayaran);
+    
+        return view('pembayaran.history', compact('pembayaran'));
+    }
+
 }

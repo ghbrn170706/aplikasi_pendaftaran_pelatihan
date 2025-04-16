@@ -277,7 +277,7 @@
 <div class="mt-6 pl-9">
 <div class="flex space-x-4">
     <button id="informasiButton" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none">Informasi</button>
-    <button id="silabusButton" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none">Silabus</button>
+    
 </div>
 
 <script>
@@ -355,36 +355,6 @@
     </div>
 </div>
 
-<!-- Silabus Content -->
-<div id="silabusContent" class="mt-4 hidden">
-<div class="container mx-auto p-4">
-        <h2 class="text-2xl font-bold mb-4">Silabus (3 JP)</h2>
-        <div class="flex flex-col space-y-4">
-            <div class="bg-white p-6 rounded-lg shadow-lg flex items-center">
-                <div class="w-6 h-6 bg-gray-300 rounded-full mr-4"></div>
-                <div>
-                    <h3 class="text-lg font-bold mb-1">Konsep Dasar SPBE</h3>
-                    <p class="text-sm text-gray-500">1 JP</p>
-                </div>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-lg flex items-center">
-                <div class="w-6 h-6 bg-gray-300 rounded-full mr-4"></div>
-                <div>
-                    <h3 class="text-lg font-bold mb-1">Kerangka Kerja SPBE</h3>
-                    <p class="text-sm text-gray-500">1 JP</p>
-                </div>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-lg flex items-center">
-                <div class="w-6 h-6 bg-gray-300 rounded-full mr-4"></div>
-                <div>
-                    <h3 class="text-lg font-bold mb-1">What's Next: Pelatihan Lanjutan</h3>
-                    <p class="text-sm text-gray-500">1 JP</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-</div>
 
 <div class="deskripsi flex-1 p-6 max-w-2xl">
       <h1 class="text-3xl font-semibold text-gray-800 mb-4">Deskripsi</h1>
@@ -436,10 +406,8 @@
    
 
 
-
-
-    <!-- Floating Box in the Right -->
-    <div class="right-box">
+<!-- Floating Box in the Right -->
+<div class="right-box">
     <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
         <h2 class="text-gray-600 text-sm font-semibold mb-2">{{ $pelatihan->nama_pelatihan }}</h2>
         <p class="text-gray-800 text-lg font-semibold">Paket {{ $pelatihan->nama_pelatihan }} 6 Bulan</p>
@@ -451,202 +419,120 @@
             <i class="fas fa-tag ml-2"></i>
         </button>
         
-<!-- Tombol Pilih Metode Pembayaran -->
-<button id="openModal" class="w-full p-2 bg-teal-600 text-white rounded mb-4 flex items-center justify-center">
-    <span>Pilih Metode Pembayaran</span>
-    <i class="fas fa-chevron-right ml-2"></i>
-</button>
+        <!-- Tombol Pilih Metode Pembayaran -->
+        <button id="openModal" class="w-full p-2 bg-teal-600 text-white rounded mb-4 flex items-center justify-center">
+            <span>Pilih Metode Pembayaran</span>
+            <i class="fas fa-chevron-right ml-2"></i>
+        </button>
 
-<!-- Metode Pembayaran yang Dipilih -->
-<div id="selectedPayment" class="mb-4 text-center text-lg font-semibold text-gray-700"></div>
+        <!-- Metode Pembayaran yang Dipilih -->
+        <div id="selectedPayment" class="mb-4 text-center text-lg font-semibold text-gray-700"></div>
 
-<div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
-    <div class="bg-white rounded-lg w-full max-w-md mx-4 overflow-hidden shadow-lg">
-        <div class="p-4 border-b flex justify-between items-center">
-            <h2 class="text-lg font-bold">Pilih Metode Pembayaran</h2>
-            <button id="closeModal" class="text-gray-500 hover:text-red-500 text-xl">&times;</button>
-        </div>
-        <div class="p-4 max-h-[70vh] overflow-y-auto">
-            <!-- Metode Pembayaran -->
-            <div class="space-y-4">
-                <!-- Kode QR -->
-                <div>
-                    <h3 class="font-semibold text-gray-700 mb-2">Kode QR</h3>
-                    <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
-                        <input type="radio" name="paymentMethod" value="QRIS" class="mr-3">
-                        <div class="flex items-center flex-1">
-                            <img src="{{ asset('img/Q.png') }}" alt="QRIS" class="h-8 w-8 mr-3">
-                            <div>
-                                <span class="font-medium">QRIS</span>
-                                <p class="text-xs text-gray-500">Scan QR Code untuk pembayaran</p>
+        <!-- Modal Pembayaran -->
+        <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+            <div class="bg-white rounded-lg w-full max-w-md mx-4 overflow-hidden shadow-lg">
+                <div class="p-4 border-b flex justify-between items-center">
+                    <h2 class="text-lg font-bold">Pilih Metode Pembayaran</h2>
+                    <button id="closeModal" class="text-gray-500 hover:text-red-500 text-xl">&times;</button>
+                </div>
+                <div class="p-4 max-h-[70vh] overflow-y-auto">
+                    <!-- Konten metode pembayaran (sama seperti sebelumnya) -->
+                    <div class="space-y-4">
+                        <!-- Kode QR -->
+                        <div>
+                            <h3 class="font-semibold text-gray-700 mb-2">Kode QR</h3>
+                            <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
+                                <input type="radio" name="paymentMethod" value="QRIS" class="mr-3">
+                                <div class="flex items-center flex-1">
+                                    <img src="{{ asset('img/Q.png') }}" alt="QRIS" class="h-8 w-8 mr-3">
+                                    <div>
+                                        <span class="font-medium">QRIS</span>
+                                        <p class="text-xs text-gray-500">Scan QR Code untuk pembayaran</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-check text-teal-600 hidden"></i>
+                            </label>
+                        </div>
+
+                        <!-- Dompet Digital / E-Wallet -->
+                        <div>
+                            <h3 class="font-semibold text-gray-700 mb-2">Dompet Digital</h3>
+                            <div class="space-y-3">
+                                <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
+                                    <input type="radio" name="paymentMethod" value="Dana" class="mr-3">
+                                    <div class="flex items-center flex-1">
+                                        <img src="{{ asset('img/D.png') }}" alt="Dana" class="h-8 w-8 mr-3">
+                                        <div>
+                                            <span class="font-medium">Dana</span>
+                                            <p class="text-xs text-gray-500">Transfer instan tanpa admin</p>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-check text-teal-600 hidden"></i>
+                                </label>
+                                
+                                <!-- Opsi pembayaran lainnya... -->
                             </div>
                         </div>
-                        <i class="fas fa-check text-teal-600 hidden"></i>
-                    </label>
-                </div>
 
-                <!-- Dompet Digital / E-Wallet -->
-                <div>
-                    <h3 class="font-semibold text-gray-700 mb-2">Dompet Digital</h3>
-                    <div class="space-y-3">
-                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
-                            <input type="radio" name="paymentMethod" value="Dana" class="mr-3">
-                            <div class="flex items-center flex-1">
-                                <img src="{{ asset('img/D.png') }}" alt="Dana" class="h-8 w-8 mr-3">
-                                <div>
-                                    <span class="font-medium">Dana</span>
-                                    <p class="text-xs text-gray-500">Transfer instan tanpa admin</p>
-                                </div>
+                        <!-- Transfer Bank -->
+                        <div>
+                            <h3 class="font-semibold text-gray-700 mb-2">Transfer Bank</h3>
+                            <div class="space-y-3">
+                                <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
+                                    <input type="radio" name="paymentMethod" value="BCA" class="mr-3">
+                                    <div class="flex items-center flex-1">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/BCA_logo.svg" alt="BCA" class="h-8 w-8 mr-3">
+                                        <div>
+                                            <span class="font-medium">BCA</span>
+                                            <p class="text-xs text-gray-500">Bank Central Asia</p>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-check text-teal-600 hidden"></i>
+                                </label>
+                                
+                                <!-- Opsi bank lainnya... -->
                             </div>
-                            <i class="fas fa-check text-teal-600 hidden"></i>
-                        </label>
-                        
-                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
-                            <input type="radio" name="paymentMethod" value="OVO" class="mr-3">
-                            <div class="flex items-center flex-1">
-                                <img src="{{ asset('img/O.jpg') }}" alt="OVO" class="h-8 w-8 mr-3">
-                                <div>
-                                    <span class="font-medium">OVO</span>
-                                    <p class="text-xs text-gray-500">Bayar dengan saldo OVO</p>
-                                </div>
-                            </div>
-                            <i class="fas fa-check text-teal-600 hidden"></i>
-                        </label>
-                        
-                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
-                            <input type="radio" name="paymentMethod" value="Gopay" class="mr-3">
-                            <div class="flex items-center flex-1">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg" alt="Gopay" class="h-8 w-8 mr-3">
-                                <div>
-                                    <span class="font-medium">GoPay</span>
-                                    <p class="text-xs text-gray-500">Bayar dengan GoPay</p>
-                                </div>
-                            </div>
-                            <i class="fas fa-check text-teal-600 hidden"></i>
-                        </label>
-                        
-                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
-                            <input type="radio" name="paymentMethod" value="ShopeePay" class="mr-3">
-                            <div class="flex items-center flex-1">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/ShopeePay_logo.svg" alt="ShopeePay" class="h-8 w-8 mr-3">
-                                <div>
-                                    <span class="font-medium">ShopeePay</span>
-                                    <p class="text-xs text-gray-500">Bayar dengan ShopeePay</p>
-                                </div>
-                            </div>
-                            <i class="fas fa-check text-teal-600 hidden"></i>
-                        </label>
-                        
-                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
-                            <input type="radio" name="paymentMethod" value="LinkAja" class="mr-3">
-                            <div class="flex items-center flex-1">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/LinkAja_logo_2019.svg" alt="LinkAja" class="h-8 w-8 mr-3">
-                                <div>
-                                    <span class="font-medium">LinkAja</span>
-                                    <p class="text-xs text-gray-500">Bayar dengan LinkAja</p>
-                                </div>
-                            </div>
-                            <i class="fas fa-check text-teal-600 hidden"></i>
-                        </label>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Transfer Bank -->
-                <div>
-                    <h3 class="font-semibold text-gray-700 mb-2">Transfer Bank</h3>
-                    <div class="space-y-3">
-                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
-                            <input type="radio" name="paymentMethod" value="BCA" class="mr-3">
-                            <div class="flex items-center flex-1">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/BCA_logo.svg" alt="BCA" class="h-8 w-8 mr-3">
-                                <div>
-                                    <span class="font-medium">BCA</span>
-                                    <p class="text-xs text-gray-500">Bank Central Asia</p>
-                                </div>
-                            </div>
-                            <i class="fas fa-check text-teal-600 hidden"></i>
-                        </label>
-                        
-                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
-                            <input type="radio" name="paymentMethod" value="Mandiri" class="mr-3">
-                            <div class="flex items-center flex-1">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Bank_Mandiri_logo_2016.svg" alt="Mandiri" class="h-8 w-8 mr-3">
-                                <div>
-                                    <span class="font-medium">Mandiri</span>
-                                    <p class="text-xs text-gray-500">Bank Mandiri</p>
-                                </div>
-                            </div>
-                            <i class="fas fa-check text-teal-600 hidden"></i>
-                        </label>
-                        
-                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
-                            <input type="radio" name="paymentMethod" value="BRI" class="mr-3">
-                            <div class="flex items-center flex-1">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Logo_BRI_%28Bank_Rakyat_Indonesia%29.svg" alt="BRI" class="h-8 w-8 mr-3">
-                                <div>
-                                    <span class="font-medium">BRI</span>
-                                    <p class="text-xs text-gray-500">Bank Rakyat Indonesia</p>
-                                </div>
-                            </div>
-                            <i class="fas fa-check text-teal-600 hidden"></i>
-                        </label>
-                        
-                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
-                            <input type="radio" name="paymentMethod" value="BNI" class="mr-3">
-                            <div class="flex items-center flex-1">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/BNI_logo.svg" alt="BNI" class="h-8 w-8 mr-3">
-                                <div>
-                                    <span class="font-medium">BNI</span>
-                                    <p class="text-xs text-gray-500">Bank Negara Indonesia</p>
-                                </div>
-                            </div>
-                            <i class="fas fa-check text-teal-600 hidden"></i>
-                        </label>
-                        
-                        <label class="p-3 border rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-50 transition">
-                            <input type="radio" name="paymentMethod" value="BSI" class="mr-3">
-                            <div class="flex items-center flex-1">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Logo_Bank_Syariah_Indonesia_%282021%29.svg" alt="BSI" class="h-8 w-8 mr-3">
-                                <div>
-                                    <span class="font-medium">BSI</span>
-                                    <p class="text-xs text-gray-500">Bank Syariah Indonesia</p>
-                                </div>
-                            </div>
-                            <i class="fas fa-check text-teal-600 hidden"></i>
-                        </label>
-                    </div>
+                <!-- Footer Modal -->
+                <div class="p-4 border-t">
+                    <button id="confirmPayment" class="w-full bg-teal-600 hover:bg-teal-700 text-white px-4 py-3 rounded-lg font-medium transition">Konfirmasi Pembayaran</button>
                 </div>
             </div>
         </div>
 
-        <!-- Footer Modal -->
-        <div class="p-4 border-t">
-            <button id="confirmPayment" class="w-full bg-teal-600 hover:bg-teal-700 text-white px-4 py-3 rounded-lg font-medium transition">Konfirmasi Pembayaran</button>
+        <!-- Informasi Total -->
+        <div class="flex justify-between text-gray-800 mb-1">
+            <span>Subtotal</span>
+            <span>Rp {{ number_format($pelatihan->harga, 0, ',', '.') }}</span>
+        </div>
+
+        <div class="flex justify-between text-gray-800 font-semibold text-lg mb-4">
+            <span>Total</span>
+            <span>Rp {{ number_format($pelatihan->harga, 0, ',', '.') }}</span>
+        </div>
+
+        <p class="text-gray-500 text-sm mb-4">+ kode unik</p>
+
+        <!-- Pesan Belum Login -->
+        <div id="notLoggedInAlert" class="w-full p-3 bg-red-50 border border-red-200 text-red-600 rounded-lg mb-4 text-center hidden">
+            <i class="fas fa-exclamation-circle mr-2"></i>
+            Anda harus <a href="{{ route('login') }}" class="text-teal-600 underline">login</a> terlebih dahulu untuk melanjutkan pembayaran.
+        </div>
+
+        <!-- Tombol Lanjut Bayar -->
+        <div class="p-4 border-t flex flex-col items-center">
+            <button id="btnLanjutBayar" class="w-full p-3 bg-gray-200 text-gray-500 rounded-lg font-medium" disabled>Lanjut Bayar</button>
+            <div id="pesanTunggu" class="mt-2 text-sm text-gray-600 hidden"></div>
         </div>
     </div>
 </div>
 
-<!-- Informasi Total -->
-<div class="flex justify-between text-gray-800 mb-1">
-    <span>Subtotal</span>
-    <span>Rp {{ number_format($pelatihan->harga, 0, ',', '.') }}</span>
-</div>
-
-<div class="flex justify-between text-gray-800 font-semibold text-lg mb-4">
-    <span>Total</span>
-    <span>Rp {{ number_format($pelatihan->harga, 0, ',', '.') }}</span>
-</div>
-
-<p class="text-gray-500 text-sm mb-4">+ kode unik</p>
-
-<!-- Tombol Lanjut Bayar -->
-<div class="p-4 border-t flex flex-col items-center">
-    <button id="btnLanjutBayar" class="w-full p-3 bg-gray-200 text-gray-500 rounded-lg font-medium" disabled>Lanjut Bayar</button>
-    <div id="pesanTunggu" class="mt-2 text-sm text-gray-600 hidden"></div>
-</div>
-
 <!-- JavaScript -->
 <script>
+    // Elemen DOM
     const openModal = document.getElementById('openModal');
     const closeModal = document.getElementById('closeModal');
     const paymentModal = document.getElementById('paymentModal');
@@ -654,18 +540,29 @@
     const selectedPayment = document.getElementById('selectedPayment');
     const btnLanjutBayar = document.getElementById('btnLanjutBayar');
     const pesanTunggu = document.getElementById('pesanTunggu');
+    const notLoggedInAlert = document.getElementById('notLoggedInAlert');
 
-    // Buka modal
+    // Fungsi cek status login
+    function checkLogin() {
+        return {{ auth()->check() ? 'true' : 'false' }};
+    }
+
+    // Buka modal dengan pengecekan login
     openModal.addEventListener('click', () => {
+        if (!checkLogin()) {
+            notLoggedInAlert.classList.remove('hidden');
+            return;
+        }
+
         paymentModal.classList.remove('hidden');
         paymentModal.classList.add('flex');
-        document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        document.body.style.overflow = 'hidden';
     });
 
     // Tutup modal
     closeModal.addEventListener('click', () => {
         paymentModal.classList.add('hidden');
-        document.body.style.overflow = 'auto'; // Re-enable scrolling
+        document.body.style.overflow = 'auto';
     });
 
     // Close modal when clicking outside
@@ -679,23 +576,20 @@
     // Highlight selected payment method
     document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
         radio.addEventListener('change', function() {
-            // Remove all check icons
             document.querySelectorAll('.fa-check').forEach(icon => {
                 icon.classList.add('hidden');
             });
             
-            // Add check icon to selected option
             if (this.checked) {
                 this.closest('label').querySelector('.fa-check').classList.remove('hidden');
             }
         });
     });
 
-    // Pilih metode pembayaran
+    // Konfirmasi pembayaran
     confirmPayment.addEventListener('click', () => {
         const selected = document.querySelector('input[name="paymentMethod"]:checked');
         if (selected) {
-            // Store the selected payment method in localStorage
             localStorage.setItem('selectedPaymentMethod', selected.value);
             
             selectedPayment.innerHTML = `
@@ -717,8 +611,13 @@
         }
     });
 
-    // Tombol Lanjut Bayar dengan hitungan mundur
+    // Proses pembayaran dengan pengecekan login
     btnLanjutBayar.addEventListener('click', () => {
+        if (!checkLogin()) {
+            notLoggedInAlert.classList.remove('hidden');
+            return;
+        }
+
         const selectedPaymentMethod = localStorage.getItem('selectedPaymentMethod');
         if (!selectedPaymentMethod) {
             alert("Metode pembayaran belum dipilih.");
@@ -735,21 +634,28 @@
 
             if (countdown < 0) {
                 clearInterval(interval);
-                // Redirect with the selected payment method
                 window.location.href = "{{ route('pembayaran.create', ['pelatihanID' => $pelatihan->pelatihanID]) }}?method=" + encodeURIComponent(selectedPaymentMethod);
             }
         }, 1000);
     });
 
-    // Check if there's a previously selected payment method
+    // Inisialisasi saat halaman dimuat
     document.addEventListener('DOMContentLoaded', () => {
+        const isLoggedIn = checkLogin();
+        
+        if (!isLoggedIn) {
+            notLoggedInAlert.classList.remove('hidden');
+            openModal.disabled = true;
+            openModal.classList.add('opacity-50', 'cursor-not-allowed');
+            btnLanjutBayar.disabled = true;
+        }
+
         const savedMethod = localStorage.getItem('selectedPaymentMethod');
-        if (savedMethod) {
-            // Set the radio button
+        if (savedMethod && isLoggedIn) {
             const radio = document.querySelector(`input[name="paymentMethod"][value="${savedMethod}"]`);
             if (radio) {
                 radio.checked = true;
-                radio.dispatchEvent(new Event('change')); // Trigger the change event
+                radio.dispatchEvent(new Event('change'));
                 
                 const label = radio.closest('label');
                 selectedPayment.innerHTML = `

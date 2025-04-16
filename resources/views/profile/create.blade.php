@@ -4,184 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Profile</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Step container styles */
-        .step-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 50px;
-        }
-
-        .step {
-            position: relative;
-            text-align: center;
-            width: 120px;
-        }
-
-        .step-circle {
-            width: 50px;
-            height: 50px;
-            background-color: #007bff;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            margin: 0 auto;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-
-        .step-title {
-            margin-top: 10px;
-            font-size: 16px;
-        }
-
-        .step-line {
-            height: 4px;
-            background-color: #007bff;
-            position: absolute;
-            top: 50%;
-            left: 60px;
-            width: 100px;
-            z-index: -1;
-        }
-
-        .step.active .step-circle {
-            background-color: #28a745;
-            transform: scale(1.1);
-        }
-
-        .step.active .step-title {
-            color: #28a745;
-            font-weight: bold;
-        }
-
-        .step.completed .step-circle {
-            background-color: #28a745;
-        }
-
-        .step:last-child .step-line {
+        /* Custom styles for image preview */
+        .image-preview {
             display: none;
-        }
-
-        .custom-header {
-            margin-top: -20px;
-        }
-
-        .text-primary {
-            font-weight: bold;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 9999px;
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-100">
 
-<div class="container mt-4">
-    <h1 class="mb-4 text-center text-primary">Create Profile</h1>
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-8">Create Profile</h1>
 
- 
     <!-- Form Section -->
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <form action="{{ route('profile.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+    <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
+        <form action="{{ route('profile.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
 
-                <!-- Profile Image -->
-                <div class="text-center mb-4">
-                    <label for="gambar" class="form-label">Upload Profile Image</label>
-                    <input type="file" class="form-control" id="gambar" name="gambar" accept="image/*">
-                    <div class="mt-3">
-                        <img id="profileImage" src="#" alt="Profile Image" class="rounded-circle" width="150" style="display: none;">
-                    </div>
+            <!-- Profile Image -->
+            <div class="flex flex-col items-center mb-6">
+                <label for="gambar" class="block text-sm font-medium text-gray-700 mb-2">Upload Profile Image</label>
+                <input type="file" class="hidden" id="gambar" name="gambar" accept="image/*">
+                <button type="button" onclick="document.getElementById('gambar').click()" class="w-36 h-36 rounded-full bg-gray-200 flex items-center justify-center cursor-pointer hover:bg-gray-300 transition duration-300">
+                    <img id="profileImage" src="#" alt="Profile Image" class="image-preview rounded-full">
+                    <span class="text-gray-500 text-2xl">+</span>
+                </button>
+            </div>
+
+            <!-- Name and NIK -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="nama" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
+                    <input type="text" id="nama" name="nama" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                 </div>
-
-                <!-- Name and NIK -->
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="nama" class="form-label">Nama Lengkap</label>
-                        <input type="text" class="form-control" id="nama" name="nama" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="nik" class="form-label">NIK</label>
-                        <input type="text" class="form-control" id="nik" name="nik" required>
-                    </div>
+                <div>
+                    <label for="nik" class="block text-sm font-medium text-gray-700">NIK</label>
+                    <input type="text" id="nik" name="nik" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                 </div>
+            </div>
 
-                <!-- Email and Phone -->
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="nomor_hp" class="form-label">Nomor HP</label>
-                        <input type="text" class="form-control" id="nomor_hp" name="nomor_hp" required>
-                    </div>
+            <!-- Email and Phone -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="email" name="email" value="{{ Auth::user()->email }}" readonly class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed">
                 </div>
-
-                <!-- Birthdate and Gender -->
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
-                        <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
-                        <select class="form-select" id="jenis_kelamin" name="jenis_kelamin" required>
-                            <option value="Laki-laki">Laki-laki</option>
-                            <option value="Perempuan">Perempuan</option>
-                        </select>
-                    </div>
+                <div>
+                    <label for="nomor_hp" class="block text-sm font-medium text-gray-700">Nomor HP</label>
+                    <input type="text" id="nomor_hp" name="nomor_hp" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                 </div>
+            </div>
 
-                <!-- Address -->
-                <div class="row mb-3">
-    <div class="col-md-6">
-        <label for="provinsi" class="form-label">Provinsi</label>
-        <select class="form-select" id="provinsi" name="provinsi" required>
-            <option value="">Pilih Provinsi</option>
-        </select>
-    </div>
-    <div class="col-md-6">
-        <label for="kabupaten" class="form-label">Kota/Kabupaten</label>
-        <select class="form-select" id="kabupaten" name="kabupaten" required>
-            <option value="">Pilih Kabupaten</option>
-        </select>
-    </div>
-</div>
-
-<div class="row mb-3">
-    <div class="col-md-6">
-        <label for="kecamatan" class="form-label">Kecamatan</label>
-        <select class="form-select" id="kecamatan" name="kecamatan" required>
-            <option value="">Pilih Kecamatan</option>
-        </select>
-    </div>
-    <div class="col-md-6">
-        <label for="desa" class="form-label">Desa</label>
-        <select class="form-select" id="desa" name="desa" required>
-            <option value="">Pilih Desa</option>
-        </select>
-    </div>
-</div>
-
-
-                <!-- Job -->
-               <select class="form-select" id="pekerjaan" name="pekerjaan" required>
-    <option value="bekerja">Bekerja</option>
-    <option value="tidak bekerja">Tidak Bekerja</option>
-    <option value="mahasiswa">Pelajar/Mahasiswa</option>
-</select>
-
-
-                <!-- Submit Button -->
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+            <!-- Birthdate and Gender -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
+                    <input type="date" id="tanggal_lahir" name="tanggal_lahir" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                 </div>
-            </form>
-        </div>
+                <div>
+                    <label for="jenis_kelamin" class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
+                    <select id="jenis_kelamin" name="jenis_kelamin" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <option value="Laki-laki">Laki-laki</option>
+                        <option value="Perempuan">Perempuan</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Address -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="provinsi" class="block text-sm font-medium text-gray-700">Provinsi</label>
+                    <select id="provinsi" name="provinsi" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <option value="">Pilih Provinsi</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="kabupaten" class="block text-sm font-medium text-gray-700">Kota/Kabupaten</label>
+                    <select id="kabupaten" name="kabupaten" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <option value="">Pilih Kabupaten</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="kecamatan" class="block text-sm font-medium text-gray-700">Kecamatan</label>
+                    <select id="kecamatan" name="kecamatan" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <option value="">Pilih Kecamatan</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="desa" class="block text-sm font-medium text-gray-700">Desa</label>
+                    <select id="desa" name="desa" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <option value="">Pilih Desa</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Job -->
+            <div class="mb-4">
+                <label for="pekerjaan" class="block text-sm font-medium text-gray-700">Pekerjaan</label>
+                <select id="pekerjaan" name="pekerjaan" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <option value="bekerja">Bekerja</option>
+                    <option value="tidak bekerja">Tidak Bekerja</option>
+                    <option value="mahasiswa">Pelajar/Mahasiswa</option>
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex justify-center">
+                <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Simpan
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -197,7 +138,6 @@
         reader.readAsDataURL(event.target.files[0]);
     });
 </script>
-
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -251,8 +191,6 @@
         });
     });
 </script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

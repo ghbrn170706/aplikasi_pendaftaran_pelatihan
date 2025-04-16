@@ -1,3 +1,7 @@
+
+@extends('dashboard')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Guru Pelatihan</title>
 
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> <!-- Alpine.js -->
 </head>
 <body>
 <div class="container mx-auto p-6 bg-gray-100">
@@ -77,3 +81,5 @@
 
 </body>
 </html>
+
+@endsection

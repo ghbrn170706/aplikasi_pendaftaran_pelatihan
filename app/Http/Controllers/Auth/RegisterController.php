@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OtpVerificationMail;
+use Illuminate\Support\Facades\Auth; 
 
 class RegisterController extends Controller
 {
@@ -60,29 +61,33 @@ class RegisterController extends Controller
         return view('auth.verifyOtp', ['email' => $email]);
     }
 
-    // Verifikasi OTP yang dimasukkan
+   // pastikan ini di atas
+
     public function verifyOtp(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
             'otp' => 'required|numeric|digits:6',
         ]);
-
+    
         $user = User::where('email', $request->email)->first();
-
+    
         if (!$user) {
             return redirect()->route('login')->withErrors(['email' => 'Pengguna tidak ditemukan.']);
         }
-
-        // Memeriksa apakah OTP sesuai dan belum kadaluarsa
+    
         if ($user->otp === $request->otp && now()->lt($user->otp_expired_at)) {
-            // Menandai OTP sebagai terverifikasi
             $user->otp_verified = true;
             $user->save();
-
-            return redirect()->route('login')->with('message', 'OTP berhasil diverifikasi, Anda dapat login sekarang!');
+    
+            // 👇 Login langsung setelah OTP berhasil
+            Auth::login($user);
+    
+            return redirect()->route('profile.create')
+                ->with('message', 'OTP berhasil diverifikasi, silakan isi profil!');
         }
-
+    
         return back()->withErrors(['otp' => 'OTP tidak valid atau sudah kedaluwarsa.']);
     }
+    
 }

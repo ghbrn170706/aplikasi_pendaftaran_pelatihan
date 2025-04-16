@@ -71,12 +71,12 @@ class ProfileController extends Controller
     
         // Validasi: pastikan pelatihanID tersedia
         if (!$pelatihanID) {
-            return redirect()->route('profile.index')->with('error', 'ID pelatihan tidak ditemukan.');
+            return redirect()->route('pelatihan_populer.index')->with('error', 'ID pelatihan tidak ditemukan.');
         }
     
-        // Redirect ke route pembayaran dengan parameter yang benar
-        return redirect()->route('pembayaran.create', ['pelatihanID' => $pelatihanID])
-            ->with('success', 'Profil berhasil dibuat! Silakan selesaikan pembayaran.');
+       // Redirect ke halaman detail pelatihan
+       return redirect()->route('pelatihan_populer.show', $pembayaran->pelatihanID)
+       ->with('success', 'Profil berhasil dibuat. Silakan lanjutkan pembayaran.');
     }
     
 

@@ -151,7 +151,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::resource('/pelatihan_populer', PelatihanController::class);
     Route::resource('/pelatihan_online', PelatihanOnlineController::class);
     Route::resource('/pelatihan_offline', PelatihanOfflineController::class);
-
+    Route::get('/pelatihan_populer/{pelatihan_populer}', [PelatihanController::class, 'show'])->name('pelatihan_populer.show');
     // Pembayaran Management
     Route::controller(PembayaranController::class)->group(function() {
         Route::get('/pembayaran', 'index')->name('pembayaran.index');
@@ -186,3 +186,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 Route::middleware(['auth', 'isUser'])->group(function () {
     // User-specific routes if needed
 });
+
+
+
+Route::get('/pembayaran-history', [PembayaranController::class, 'history'])->name('pembayaran.history');

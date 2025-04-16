@@ -4,87 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Pelatihan Offline</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    @extends('layouts.template')
+<body class="bg-gray-100">
 
-    @section('content')
-    <div class="container mt-4">
-        <h1 class="mb-4 text-center text-primary">Create Pelatihan Offline</h1>
 
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <form method="POST" action="{{ route('pelatihan_offline.store') }}" enctype="multipart/form-data">
-                    @csrf
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-8">Buat Pelatihan Offline</h1>
 
-                    <!-- Nama Pelatihan -->
-                    <div class="mb-3">
-                        <label for="nama_pelatihan" class="form-label">Nama Pelatihan</label>
-                        <input id="nama_pelatihan" type="text" class="form-control" name="nama_pelatihan" value="{{ old('nama_pelatihan') }}" required>
-                    </div>
+    <!-- Form Section -->
+    <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
+        <form method="POST" action="{{ route('pelatihan_offline.store') }}" enctype="multipart/form-data">
+            @csrf
 
-                    <!-- Deskripsi -->
-                    <div class="mb-3">
-                        <label for="deskripsi" class="form-label">Deskripsi</label>
-                        <textarea id="deskripsi" class="form-control" name="deskripsi" required>{{ old('deskripsi') }}</textarea>
-                    </div>
-
-                    <!-- Jenis -->
-                    <div class="mb-3">
-                        <label for="jenis" class="form-label">Jenis</label>
-                        <select id="jenis" class="form-select" name="jenis" required>
-                            <option value="offline">Offline</option>
-                        </select>
-                    </div>
-
-                    <!-- Jadwal Mulai -->
-                    <div class="mb-3">
-                        <label for="jadwal_mulai" class="form-label">Jadwal Mulai</label>
-                        <input id="jadwal_mulai" type="date" class="form-control" name="jadwal_mulai" value="{{ old('jadwal_mulai') }}" required>
-                    </div>
-
-                    <!-- Jadwal Selesai -->
-                    <div class="mb-3">
-                        <label for="jadwal_selesai" class="form-label">Jadwal Selesai</label>
-                        <input id="jadwal_selesai" type="date" class="form-control" name="jadwal_selesai" value="{{ old('jadwal_selesai') }}" required>
-                    </div>
-
-                    <!-- Lokasi -->
-                    <div class="mb-3">
-                        <label for="lokasi" class="form-label">Lokasi</label>
-                        <input id="lokasi" type="text" class="form-control" name="lokasi" value="{{ old('lokasi') }}" required>
-                    </div>
-
-                    <!-- Kapasitas -->
-                    <div class="mb-3">
-                        <label for="kapasitas" class="form-label">Kapasitas</label>
-                        <input id="kapasitas" type="number" class="form-control" name="kapasitas" value="{{ old('kapasitas') }}" required>
-                    </div>
-
-                    <!-- Harga -->
-                    <div class="mb-3">
-                        <label for="harga" class="form-label">Harga</label>
-                        <input id="harga" type="number" step="0.01" class="form-control" name="harga" value="{{ old('harga') }}" required>
-                    </div>
-
-                    <!-- Foto Pelatihan -->
-                    <div class="mb-3">
-                        <label for="foto_pelatihan" class="form-label">Foto Pelatihan</label>
-                        <input id="foto_pelatihan" type="file" class="form-control" name="foto_pelatihan">
-                    </div>
-
-                    <!-- Submit Button -->
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Create</button>
-                    </div>
-                </form>
+            <!-- Nama Pelatihan -->
+            <div class="mb-4">
+                <label for="nama_pelatihan" class="block text-sm font-medium text-gray-700">Nama Pelatihan</label>
+                <input id="nama_pelatihan" type="text" name="nama_pelatihan" value="{{ old('nama_pelatihan') }}" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
-        </div>
+
+            <!-- Deskripsi -->
+            <div class="mb-4">
+                <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
+                <textarea id="deskripsi" name="deskripsi" rows="4" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">{{ old('deskripsi') }}</textarea>
+            </div>
+
+            <!-- Jenis -->
+            <div class="mb-4">
+                <label for="jenis" class="block text-sm font-medium text-gray-700">Jenis</label>
+                <select id="jenis" name="jenis" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <option value="offline">Offline</option>
+                </select>
+            </div>
+
+            <!-- Jadwal Mulai & Selesai -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="jadwal_mulai" class="block text-sm font-medium text-gray-700">Jadwal Mulai</label>
+                    <input id="jadwal_mulai" type="date" name="jadwal_mulai" value="{{ old('jadwal_mulai') }}" required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="jadwal_selesai" class="block text-sm font-medium text-gray-700">Jadwal Selesai</label>
+                    <input id="jadwal_selesai" type="date" name="jadwal_selesai" value="{{ old('jadwal_selesai') }}" required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+            </div>
+
+            <!-- Lokasi -->
+            <div class="mb-4">
+                <label for="lokasi" class="block text-sm font-medium text-gray-700">Lokasi</label>
+                <input id="lokasi" type="text" name="lokasi" value="{{ old('lokasi') }}" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
+
+            <!-- Kapasitas & Harga -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="kapasitas" class="block text-sm font-medium text-gray-700">Kapasitas</label>
+                    <input id="kapasitas" type="number" name="kapasitas" value="{{ old('kapasitas') }}" required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="harga" class="block text-sm font-medium text-gray-700">Harga</label>
+                    <input id="harga" type="number" step="0.01" name="harga" value="{{ old('harga') }}" required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+            </div>
+
+            <!-- Foto Pelatihan -->
+            <div class="mb-4">
+                <label for="foto_pelatihan" class="block text-sm font-medium text-gray-700">Foto Pelatihan</label>
+                <input id="foto_pelatihan" type="file" name="foto_pelatihan"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex justify-center gap-4">
+                <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Buat Pelatihan
+                </button>
+                <a href="{{ route('pelatihan.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Batal
+                </a>
+            </div>
+        </form>
     </div>
+</div>
 
-    @endsection
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

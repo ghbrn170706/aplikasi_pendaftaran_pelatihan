@@ -21,6 +21,7 @@ class PelatihanController extends Controller
     }
     
 
+    
     /**
      * Menampilkan form untuk menambahkan pelatihan baru.
      */
